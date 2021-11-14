@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="baseline.ControllerHomePage">
    <children>
       <GridPane>
         <columnConstraints>
@@ -23,16 +22,16 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="275.0" text="Save" />
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="326.0" text="Load" GridPane.columnIndex="1" />
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="322.0" text="Help" GridPane.columnIndex="2" />
+            <Button mnemonicParsing="false" onAction="#handleSave" prefHeight="30.0" prefWidth="200.0" text="Save" />
+            <Button mnemonicParsing="false" onAction="#handleLoad" prefHeight="30.0" prefWidth="200.0" text="Load" GridPane.columnIndex="1" />
+            <Button mnemonicParsing="false" onAction="#handleHelp" prefHeight="30.0" prefWidth="274.0" text="Help" GridPane.columnIndex="2" />
          </children>
       </GridPane>
-      <TableView prefHeight="299.0" prefWidth="600.0">
+      <TableView fx:id="tableView" prefHeight="299.0" prefWidth="600.0">
         <columns>
-          <TableColumn prefWidth="274.4000244140625" text="Name" />
-          <TableColumn prefWidth="195.20001220703125" text="Serial Number" />
-            <TableColumn minWidth="0.0" prefWidth="133.60003662109375" text="Value" />
+          <TableColumn fx:id="tableName" prefWidth="274.4000244140625" text="Name" />
+          <TableColumn fx:id="tableSerialNumber" prefWidth="195.20001220703125" text="Serial Number" />
+            <TableColumn fx:id="tableValue" minWidth="0.0" prefWidth="133.60003662109375" text="Value" />
         </columns>
       </TableView>
       <VBox prefHeight="72.0" prefWidth="600.0" spacing="5.0">
@@ -51,12 +50,12 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TextField prefHeight="26.0" prefWidth="179.0" promptText="Search..." />
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="87.0" text="Search" GridPane.columnIndex="1" />
+                  <TextField fx:id="searchBox" prefHeight="26.0" prefWidth="179.0" promptText="Search..." />
+                  <Button mnemonicParsing="false" onAction="#handleSearch" prefHeight="26.0" prefWidth="87.0" text="Search" GridPane.columnIndex="1" />
                   <Label prefHeight="18.0" prefWidth="42.0" text="Sort by" GridPane.columnIndex="3" />
-                  <Button mnemonicParsing="false" text="Name" GridPane.columnIndex="4" />
-                  <Button mnemonicParsing="false" text="Serial Number" GridPane.columnIndex="5" />
-                  <Button mnemonicParsing="false" text="Value" GridPane.columnIndex="6" />
+                  <Button mnemonicParsing="false" onAction="#handleSortByName" text="Name" GridPane.columnIndex="4" />
+                  <Button mnemonicParsing="false" onAction="#handleSortBySerialNumber" text="Serial Number" GridPane.columnIndex="5" />
+                  <Button mnemonicParsing="false" onAction="#handleSortByValue" text="Value" GridPane.columnIndex="6" />
                </children>
             </GridPane>
             <GridPane alignment="CENTER_LEFT">
@@ -72,22 +71,22 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="36.0" prefWidth="600.0">
                      <children>
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Add" />
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleAdd" text="Add" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="36.0" prefWidth="600.0" GridPane.columnIndex="1">
                      <children>
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Edit" />
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleEdit" text="Edit" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="36.0" prefWidth="600.0" GridPane.columnIndex="2">
                      <children>
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Remove" />
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleRemove" text="Remove" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="36.0" prefWidth="600.0" GridPane.columnIndex="3">
                      <children>
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Clear" />
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleClear" text="Clear" />
                      </children>
                   </VBox>
                </children>

@@ -21,6 +21,16 @@ public class Item {
         this.value = new SimpleStringProperty(value);
     }
 
+    public Item clone() {
+        return new Item(name.getValue(), serialNumber.getValue(), value.getValue());
+    }
+
+    public void restore(Item i) {
+        name.setValue(i.getNameString());
+        serialNumber.setValue(i.getSerialNumberString());
+        value.setValue(i.getValueString());
+    }
+
     private String getValueString() {
         return value.get();
     }
