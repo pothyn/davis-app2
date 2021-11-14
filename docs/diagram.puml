@@ -1,0 +1,102 @@
+@startuml
+
+class InventoryManagementApplication {
+    -window: Stage
+
+    +start(Stage stage)
+    +main(String[] args)
+    +goToHomePage()
+}
+
+class Item {
+    -name: SimpleStringProperty
+    -serialNumber: SimpleStringProperty
+    -value: SimpleStringProperty
+
+    +Item()
+    +Item(name, serialNumber, value)
+
+    +clone(): Item
+    +restore(Item i): void
+
+    +getValueString(): String
+    +getValueStringProperty(): SimpleStringProperty
+    +getSerialNumberString(): String
+    +getSerialNumberStringProperty(): SimpleStringProperty
+    +getNameString(): String
+    +getNameStringProperty(): SimpleStringProperty
+}
+
+class ControllerHomePage {
+    -itemList: ObservableList<Item>
+    -filteredList: FilteredList<Item>
+    -tableView
+    -tableName
+    -tableSerialNumber
+    -tableValue
+
+    +handleClear()
+    +handleAdd()
+    +handleRemove()
+    +handleEdit()
+    +handleSave()
+    +handleLoad()
+    +handleHelp()
+    +clearList()
+    +initializeList()
+    +initialize()
+    +handleSearch()
+    +handleSortByName()
+    +handleSortBySerialNumber()
+    +handleSortByValue()
+}
+
+class ControllerEdit {
+    -isValid: boolean
+    -nameField: TextField
+    -SerialNumberField: TextField
+    -valueField: TextField
+    -submitButton: Button
+
+    +handleSubmit(): void
+    +setItem(Item i): void
+    +getIsValid(): boolean
+}
+
+class ControllerLoad {
+    -itemList: ObservableList<Item>
+    -file: File
+    -fileTextBox: TextField
+
+    +pickFile()
+    +loadFile()
+    +parseDataCSV()
+    +parseDataHTML()
+    +parseDataJSON()
+}
+
+class ControllerSaveAs {
+    -itemList: ObservableList<Item>
+    -file: File
+    -fileTextBox: TextField
+
+    +pickFile()
+    +save()
+    +saveCSV()
+    +saveHTML()
+    +saveJSON()
+}
+
+InventoryManagementApplication -> ControllerHomePage
+
+ControllerHomePage -> ControllerLoad
+ControllerHomePage -> ControllerEdit
+ControllerHomePage -> ControllerSaveAs
+
+ControllerHomePage -> Item
+ControllerEdit -> Item
+ControllerSaveAs -> Item
+ControllerLoad -> Item
+
+
+@enduml
