@@ -1,7 +1,6 @@
 package baseline;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 
 public class Item {
     private SimpleStringProperty name;
@@ -22,9 +21,27 @@ public class Item {
         this.value = new SimpleStringProperty(value);
     }
 
-    // THERES A LOT MORE OF THESE FUNCTIONS, BUT ITS RESTING TIME
+    private String getValueString() {
+        return value.get();
+    }
 
-    private SimpleStringProperty nameStringProperty() {
+    private SimpleStringProperty getValueStringProperty() {
+        return value;
+    }
+
+    private String getSerialNumberString() {
+        return serialNumber.get();
+    }
+
+    private SimpleStringProperty getSerialNumberStringProperty() {
+        return serialNumber;
+    }
+
+    private String getNameString() {
+        return name.get();
+    }
+
+    private SimpleStringProperty getNameStringProperty() {
         return name;
     }
 }
