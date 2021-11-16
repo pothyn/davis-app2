@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+      prefWidth="600.0" xmlns="http://javafx.com/javafx/17">
+    <GridPane prefWidth="600.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="30.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="350.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="30.0"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="60.8" minHeight="10.0" prefHeight="44.8" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="410.0" vgrow="SOMETIMES"/>
+        </rowConstraints>
+        <TextArea editable="false" prefHeight="200.0" prefWidth="200.0"
+                  text="Add - Enter data to create a new item for your To Do List.&#10;&#10;Edit - Select an item to change and hit Edit to adjust values on the app.&#10;&#10;Remove - Select an item and hit Remove to delete a value.&#10;&#10;Clear - Remove all values currently on the To Do List.&#10;&#10;Display Buttons - Click All, Incomplete, or Complete to specify which data you would like to be displayed.&#10;&#10;Save As - Click Save As and click the box to enter in a file location. Then hit Save again to save.&#10;&#10;Load - Click Load and click the box to enter a previously created file. Then hit Load to load.&#10;&#10;Help - Click the Help button to navigate to this window.&#10;&#10;Click the X button to exit any window, and on the Home Page to exit the program."
+                  wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        <Label alignment="CENTER" prefHeight="18.0" prefWidth="364.0" text="Help" GridPane.columnIndex="1">
+            <font>
+                <Font name="Candara Bold" size="18.0"/>
+            </font>
+        </Label>
+    </GridPane>
+</VBox>

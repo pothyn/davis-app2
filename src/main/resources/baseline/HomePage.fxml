@@ -22,9 +22,9 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" onAction="#handleSave" prefHeight="30.0" prefWidth="200.0" text="Save" />
-            <Button mnemonicParsing="false" onAction="#handleLoad" prefHeight="30.0" prefWidth="200.0" text="Load" GridPane.columnIndex="1" />
-            <Button mnemonicParsing="false" onAction="#handleHelp" prefHeight="30.0" prefWidth="274.0" text="Help" GridPane.columnIndex="2" />
+            <Button contentDisplay="TEXT_ONLY" mnemonicParsing="false" onAction="#handleSave" prefHeight="30.0" prefWidth="200.0" text="Save" />
+            <Button contentDisplay="TEXT_ONLY" mnemonicParsing="false" onAction="#handleLoad" prefHeight="30.0" prefWidth="200.0" text="Load" GridPane.columnIndex="1" />
+            <Button contentDisplay="TEXT_ONLY" mnemonicParsing="false" onAction="#handleHelp" prefHeight="30.0" prefWidth="200.0" text="Help" GridPane.columnIndex="2" />
          </children>
       </GridPane>
       <TableView fx:id="tableView" prefHeight="299.0" prefWidth="600.0">
@@ -51,7 +51,7 @@
               </rowConstraints>
                <children>
                   <TextField fx:id="searchBox" prefHeight="26.0" prefWidth="179.0" promptText="Search..." />
-                  <Button mnemonicParsing="false" onAction="#handleSearch" prefHeight="26.0" prefWidth="87.0" text="Search" GridPane.columnIndex="1" />
+                  <Button contentDisplay="TEXT_ONLY" mnemonicParsing="false" onAction="#handleSearch" prefHeight="26.0" prefWidth="87.0" text="Search" GridPane.columnIndex="1" />
                   <Label prefHeight="18.0" prefWidth="42.0" text="Sort by" GridPane.columnIndex="3" />
                   <Button mnemonicParsing="false" onAction="#handleSortByName" text="Name" GridPane.columnIndex="4" />
                   <Button mnemonicParsing="false" onAction="#handleSortBySerialNumber" text="Serial Number" GridPane.columnIndex="5" />

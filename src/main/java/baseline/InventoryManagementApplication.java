@@ -29,7 +29,7 @@ public class InventoryManagementApplication extends javafx.application.Applicati
 
         Scene scene = new Scene(root);
 
-        window.setTitle("To Do List");
+        window.setTitle("Stockable");
         window.setScene(scene);
         window.show();
     }

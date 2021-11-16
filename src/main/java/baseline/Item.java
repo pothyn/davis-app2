@@ -31,27 +31,27 @@ public class Item {
         value.setValue(i.getValueString());
     }
 
-    private String getValueString() {
+    public String getValueString() {
         return value.get();
     }
 
-    private SimpleStringProperty getValueStringProperty() {
+    public SimpleStringProperty valueProperty() {
         return value;
     }
 
-    private String getSerialNumberString() {
+    public String getSerialNumberString() {
         return serialNumber.get();
     }
 
-    private SimpleStringProperty getSerialNumberStringProperty() {
+    public SimpleStringProperty serialNumberProperty() {
         return serialNumber;
     }
 
-    private String getNameString() {
+    public String getNameString() {
         return name.get();
     }
 
-    private SimpleStringProperty getNameStringProperty() {
+    public SimpleStringProperty nameProperty() {
         return name;
     }
 }

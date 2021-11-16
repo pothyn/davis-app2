@@ -1,10 +1,19 @@
 package baseline;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
+import java.io.IOException;
 
 public class ControllerHomePage {
     private ObservableList<Item> itemList;
@@ -23,17 +32,42 @@ public class ControllerHomePage {
     private TableColumn<Item, String> tableValue;
 
     @FXML
-    public void handleSave() {
-        // open saveAs fxml file
-        // create new ControllerSaveAs
+    public void handleSave() throws IOException {
+        // open Save fxml file
+        FXMLLoader loader = new FXMLLoader(InventoryManagementApplication.class.getClassLoader().getResource("baseline/Save.fxml"));
+        Parent root = loader.load();
+
+        // create new ControllerSave
+        ControllerSave controllerSaveAs = loader.getController();
+
         // set item list to save there to itemList
+        controllerSaveAs.setItemList(itemList);
+
+        Stage stage = new Stage(StageStyle.DECORATED);
+        stage.setTitle("Save As");
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
-    public void handleLoad() {
+    public void handleLoad() throws IOException {
         // open load fxml file
+        FXMLLoader loader = new FXMLLoader(InventoryManagementApplication.class.getClassLoader().getResource("baseline/Load.fxml"));
+        Parent root = loader.load();
+        clearList();
+
         // create new ControllerLoad
+        ControllerLoad controllerLoad = loader.getController();
+
         // set item list to load there to itemList
+        controllerLoad.setItemList(itemList);
+
+        Stage stage = new Stage(StageStyle.DECORATED);
+        stage.setTitle("Load");
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
@@ -42,27 +76,80 @@ public class ControllerHomePage {
     }
 
     @FXML
-    public void handleAdd() {
+    public void handleAdd() throws IOException {
         // create new Item
+        Item newItem = new Item();
+
         // open AddEdit.fxml
+        FXMLLoader loader = new FXMLLoader(InventoryManagementApplication.class.getClassLoader().getResource("baseline/AddEdit.fxml"));
+        Parent root = loader.load();
+
         // create new ControllerEdit and use that new Item
+        ControllerEdit editController = loader.getController();
+        editController.setItem(newItem);
+
+        Stage stage = new Stage(StageStyle.DECORATED);
+        stage.setTitle("Add");
+        stage.setOnHidden(event -> {
+            if (editController.getIsValid()) {
+                itemList.add(0, newItem);
+                tableView.getSelectionModel().selectFirst();
+            }
+        });
+        Scene scene = new Scene(root);
+
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
-    public void handleEdit() {
+    public void handleEdit() throws IOException {
+        // get selected item from tableView
+        Item selectedItem = (Item) tableView.getFocusModel().getFocusedItem();
+        if (selectedItem == null)
+            return;
+
+        itemList.remove(selectedItem);
+        Item backup = selectedItem.clone();
+
         // open AddEdit.fxml
+        FXMLLoader loader = new FXMLLoader(InventoryManagementApplication.class.getClassLoader().getResource("baseline/AddEdit.fxml"));
+        Parent root = loader.load();
         // create new ControllerEdit and use selected Item
+        ControllerEdit editController = loader.getController();
+        editController.setItem(selectedItem);
+
+        Stage stage = new Stage(StageStyle.DECORATED);
+        stage.setTitle("Edit");
+        stage.setOnHidden(event -> {
+            if (!editController.getIsValid())
+                selectedItem.restore(backup);
+
+            itemList.add(0, selectedItem);
+            tableView.getFocusModel().focus(0);
+        });
+        Scene scene = new Scene(root);
+
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
     public void handleRemove() {
         // get selected item
+        Item selectedItem = (Item) tableView.getFocusModel().getFocusedItem();
+
         // remove selected item from itemList
+        itemList.remove(selectedItem);
     }
 
     private void clearList() {
         // initialize itemList and filteredList as new lists
+        itemList = FXCollections.observableArrayList();
+        filteredList = new FilteredList<>(itemList);
+
         // set tableView to display new filteredList
+        tableView.setItems(filteredList);
     }
 
     @FXML
@@ -74,6 +161,9 @@ public class ControllerHomePage {
         clearList();
 
         // set cell factories for each tableColumn
+        tableName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        tableSerialNumber.setCellValueFactory(new PropertyValueFactory<>("serialNumber"));
+        tableValue.setCellValueFactory(new PropertyValueFactory<>("value"));
     }
 
     @FXML
