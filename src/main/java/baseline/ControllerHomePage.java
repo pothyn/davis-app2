@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -30,6 +31,9 @@ public class ControllerHomePage {
 
     @FXML
     private TableColumn<Item, String> tableValue;
+
+    @FXML
+    private TextField searchBox;
 
     @FXML
     public void handleSave() throws IOException {
@@ -71,8 +75,18 @@ public class ControllerHomePage {
     }
 
     @FXML
-    public void handleHelp() {
+    public void handleHelp() throws IOException {
         // open help fxml file
+        FXMLLoader loader = new FXMLLoader(InventoryManagementApplication.class.getClassLoader().getResource("baseline/Help.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = new Stage(StageStyle.DECORATED);
+        stage.setTitle("Help");
+
+        Scene scene = new Scene(root);
+
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
@@ -174,7 +188,15 @@ public class ControllerHomePage {
     @FXML
     public void handleSearch() {
         // take input from searchBox
+        String input = searchBox.getText();
+
         // change filteredList to only display those containing that substring
+        if(input.equals(null)) {
+
+        }
+
+        // run through the substrings for each name/serialNum/value
+
         // set tableView
     }
 
