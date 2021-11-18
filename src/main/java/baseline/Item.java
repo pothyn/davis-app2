@@ -28,15 +28,15 @@ public class Item implements Comparable<Item> {
     }
 
     public void setCompareTo(int sortFlag) {
-        if(sortFlag > 0 && sortFlag < 3)
+        if(sortFlag >= 0 && sortFlag < 3)
             this.sortFlag = sortFlag;
     }
 
     public int compareTo(Item i) {
         if(sortFlag == 0)
-            return this.getNameString().compareTo(i.getNameString());
+            return this.getNameString().compareToIgnoreCase(i.getNameString());
         else if(sortFlag == 1)
-            return this.getSerialNumberString().compareTo(i.getSerialNumberString());
+            return this.getSerialNumberString().compareToIgnoreCase(i.getSerialNumberString());
         else
             return this.getValueString().compareTo(i.getValueString());
     }

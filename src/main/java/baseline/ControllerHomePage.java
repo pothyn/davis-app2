@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.util.Collections;
 
 public class ControllerHomePage {
     private ObservableList<Item> itemList;
@@ -213,19 +214,44 @@ public class ControllerHomePage {
 
     @FXML
     public void handleSortByName() {
-        // use collections sort on name for filteredList
-        // set it for tableView
+        // Check item list isn't null
+        if(itemList.isEmpty()) {
+            return;
+        }
+
+        // set the sort to name
+        itemList.get(0).setCompareTo(0);
+
+        // use collections sort on name for itemList
+        Collections.sort(itemList);
     }
 
     @FXML
     public void handleSortBySerialNumber() {
-        // use collections sort on serialNumber for filteredList
-        // set tableView
+        // Check item list isn't null
+        if(itemList.isEmpty()) {
+            return;
+        }
+
+        // set the sort to serial numbers
+        itemList.get(0).setCompareTo(1);
+
+        // use collections sort on serialNumber for itemList
+        Collections.sort(itemList);
+
     }
 
     @FXML
     public void handleSortByValue() {
-        // use collections sort on value for filteredList
-        // set tableView
+        // Check item list isn't null
+        if(itemList.isEmpty()) {
+            return;
+        }
+
+        // set the sort to values
+        itemList.get(0).setCompareTo(2);
+
+        // use collections sort on value for itemList
+        Collections.sort(itemList);
     }
 }

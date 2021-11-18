@@ -32,7 +32,7 @@
         <columns>
           <TableColumn fx:id="tableName" prefWidth="274.4000244140625" text="Name" />
           <TableColumn fx:id="tableSerialNumber" prefWidth="195.20001220703125" text="Serial Number" />
-            <TableColumn fx:id="tableValue" minWidth="0.0" prefWidth="133.60003662109375" text="Value" />
+            <TableColumn fx:id="tableValue" minWidth="0.0" prefWidth="126.4000244140625" text="Value" />
         </columns>
       </TableView>
       <VBox prefHeight="72.0" prefWidth="600.0" spacing="5.0">
