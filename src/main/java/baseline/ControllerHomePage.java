@@ -92,7 +92,7 @@ public class ControllerHomePage {
     @FXML
     public void handleAdd() throws IOException {
         // create new Item
-        Item newItem = new Item();
+        Item newItem = new Item(itemList);
 
         // open AddEdit.fxml
         FXMLLoader loader = new FXMLLoader(InventoryManagementApplication.class.getClassLoader().getResource("baseline/AddEdit.fxml"));
@@ -186,18 +186,29 @@ public class ControllerHomePage {
     }
 
     @FXML
-    public void handleSearch() {
+    public void handleSearchName() {
         // take input from searchBox
         String input = searchBox.getText();
 
         // change filteredList to only display those containing that substring
         if(input.equals(null)) {
-
+            filteredList.setPredicate(item -> true);
+        } else {
+            filteredList.setPredicate(item -> item.getNameString().contains(input));
         }
+    }
 
-        // run through the substrings for each name/serialNum/value
+    @FXML
+    public void handleSearchSerialNumber() {
+        // take input from searchBox
+        String input = searchBox.getText();
 
-        // set tableView
+        // change filteredList to only display those containing that substring
+        if(input.equals(null)) {
+            filteredList.setPredicate(item -> true);
+        } else {
+            filteredList.setPredicate(item -> item.getSerialNumberString().contains(input));
+        }
     }
 
     @FXML

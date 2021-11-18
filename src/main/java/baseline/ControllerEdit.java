@@ -1,5 +1,6 @@
 package baseline;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -42,7 +43,7 @@ public class ControllerEdit {
         }
 
         // else if valueField cannot be parseDoubled
-        else if(!valueFieldParseable()) {
+        else if(!valueFieldParsable()) {
             displayError(2);
         }
 
@@ -106,11 +107,33 @@ public class ControllerEdit {
 
     public boolean isSerialNumberUnique() {
         // for loop through all other values in item list
+        ObservableList<Item> parentList = item.getParentList();
+
+        for (Item i : parentList) {
+            if (i.getSerialNumberString().equalsIgnoreCase(item.getSerialNumberString()))
+                return false;
+        }
         return true;
     }
 
-    private boolean valueFieldParseable() {
-        // check if valueField is parseable or not
+    private boolean valueFieldParsable() {
+        // take value field
+        String value = valueField.getText();
+
+        // take off the initial dollar sign from string
+        if(value.charAt(0) != '$') {
+            return false;
+        }
+
+        value = value.substring(1);
+
+        try {
+            Double.parseDouble(value);
+        } catch(NumberFormatException e) {
+            System.out.println("number format exception");
+            return false;
+        }
+
         return true;
     }
 

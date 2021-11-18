@@ -30,7 +30,13 @@ public class ControllerLoad {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
 
+        // add .txt extension
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text doc(*.txt)", "*.txt"));
+        // add .html extension
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("HTML File(*.html)", "*.html"));
+        // add .json extension
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON File(*.json)", "*.json"));
+
         File f = fileChooser.showOpenDialog(stage);
         if (f != null) {
             file = f;
@@ -73,7 +79,7 @@ public class ControllerLoad {
     }
 
     public void addLineCSV(String line) {
-        Item newItem = new Item();
+        Item newItem = new Item(itemList);
         int round = 0;
         int beginIndex = 0;
 
