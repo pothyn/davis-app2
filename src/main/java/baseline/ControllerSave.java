@@ -6,6 +6,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -25,12 +27,13 @@ public class ControllerSave {
         // new fileChooser
         FileChooser choose = new FileChooser();
 
+        choose.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON File(*.json)", "*.json"));
         // add .txt file extension
         choose.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text doc(*.txt)", "*.txt"));
         // add .html file extension
         choose.getExtensionFilters().add(new FileChooser.ExtensionFilter("HTML File(*.html)", "*.html"));
         // add .json file extension
-        choose.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON File(*.json)", "*.json"));
+//        choose.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON File(*.json)", "*.json"));
 
         // show save dialog
         File f = choose.showSaveDialog(stage);
@@ -51,9 +54,11 @@ public class ControllerSave {
         }
         else if(file.toPath().toString().endsWith(".html")) {
             System.out.println(".html file detected!");
+            saveHTML();
         }
         else {
             System.out.println(".json file detected!");
+            saveJSON();
         }
     }
 
@@ -89,11 +94,40 @@ public class ControllerSave {
     }
 
     public void saveJSON() {
-        // use gson to convert from json to values
+        clearText();
+
+        FileWriter fileWriter;
+
+        ItemArrayList itemArrayList = new ItemArrayList(itemList);
+
+        GsonBuilder builder = new GsonBuilder();
+        builder.setPrettyPrinting();
+        Gson gson = builder.create();
+        String gsonString = gson.toJson(itemArrayList);
+
+        try {
+            fileWriter = new FileWriter(file,true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.write(gsonString);
+            bufferedWriter.flush();
+            bufferedWriter.close();
+            System.out.println("Finished writing!");
+
+        } catch (IOException e) {
+            System.out.println("Add line failed!!" +e);
+        }
+
+        Stage stage = (Stage) fileLocationTextBox.getScene().getWindow();
+        stage.close();
     }
 
     public void saveHTML() {
         // create html webp
+        clearText();
+
+
+        Stage stage = (Stage) fileLocationTextBox.getScene().getWindow();
+        stage.close();
     }
 
     private void clearText() {

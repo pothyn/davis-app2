@@ -1,5 +1,7 @@
 package baseline;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -60,15 +62,17 @@ public class ControllerLoad {
         if(file.toPath().toString().endsWith(".txt")) {
             // go line by line through the txt
             System.out.println("LOG: Load File .txt");
-            parseDataCSV();
+            loadCSV();
         }
         // else if html, parseDataHTML()
             // use entire file and format it inside parseDataHTML()
         // else parseDataJSON()
+        else
+            loadJSON();
             // use entire file and deformat inside parseDataJSON()
     }
 
-    public void parseDataCSV() throws FileNotFoundException {
+    public void loadCSV() throws FileNotFoundException {
 
         Scanner in = new Scanner(file);
 
@@ -101,7 +105,7 @@ public class ControllerLoad {
         itemList.add(newItem);
     }
 
-    public void parseDataHTML() {
+    public void loadHTML() {
         // format for html
 
         // add table format and add each value
@@ -109,8 +113,25 @@ public class ControllerLoad {
         // close formatting
     }
 
-    public void parseDataJSON() {
+    public void loadJSON() throws FileNotFoundException {
         // run through values for JSON and save them to itemList
+        Scanner in = new Scanner(file);
+        StringBuilder jsonText = new StringBuilder();
+
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+
+        while(in.hasNext()) {
+            jsonText.append(in.nextLine());
+        }
+
+        //
+        ItemArrayList itemArrayList = gson.fromJson(jsonText.toString(), ItemArrayList.class);
+
+        for(int i = 0; i < itemArrayList.size(); i++) {
+            itemList.add(new Item(itemArrayList.get(i).getName(),itemArrayList.get(i).getSerialNumber(),
+                    itemArrayList.get(i).getValue(), itemList));
+        }
     }
 
     public void setItemList(ObservableList<Item> itemList) {

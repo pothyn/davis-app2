@@ -7,6 +7,7 @@ public class Item implements Comparable<Item> {
     private SimpleStringProperty name;
     private SimpleStringProperty serialNumber;
     private SimpleStringProperty value;
+    private ItemBasic itemBasic;
     private ObservableList<Item> parentList;
 
     private static int sortFlag;
@@ -49,6 +50,23 @@ public class Item implements Comparable<Item> {
         name.setValue(i.getNameString());
         serialNumber.setValue(i.getSerialNumberString());
         value.setValue(i.getValueString());
+    }
+
+    public void setItemBasic() {
+        itemBasic = new ItemBasic();
+        itemBasic.setName(getNameString());
+        itemBasic.setValue(getValueString());
+        itemBasic.setSerialNumber(getSerialNumberString());
+
+        System.out.println(itemBasic.getName()+itemBasic.getSerialNumber()+itemBasic.getValue());
+    }
+
+    public ItemBasic getItemBasic() {
+        return itemBasic;
+    }
+
+    public String toString() {
+        return "name:"+getNameString()+", serialNumber:"+getSerialNumberString()+", value:"+getValueString();
     }
 
     public String getValueString() {
