@@ -49,15 +49,12 @@ public class ControllerSave {
 
         // check if file is .txt, .json, .html and write depending on that
         if(file.toPath().toString().endsWith(".txt")) {
-            System.out.println(".txt file detected!");
             saveCSV();
         }
         else if(file.toPath().toString().endsWith(".html")) {
-            System.out.println(".html file detected!");
             saveHTML();
         }
         else {
-            System.out.println(".json file detected!");
             saveJSON();
         }
     }
@@ -97,7 +94,6 @@ public class ControllerSave {
         clearText();
 
         FileWriter fileWriter;
-
         ItemArrayList itemArrayList = new ItemArrayList(itemList);
 
         GsonBuilder builder = new GsonBuilder();
@@ -111,7 +107,6 @@ public class ControllerSave {
             bufferedWriter.write(gsonString);
             bufferedWriter.flush();
             bufferedWriter.close();
-            System.out.println("Finished writing!");
 
         } catch (IOException e) {
             System.out.println("Add line failed!!" +e);
@@ -125,6 +120,33 @@ public class ControllerSave {
         // create html webp
         clearText();
 
+        FileWriter fileWriter;
+        StringBuilder htmlString = new StringBuilder();
+
+        htmlString.append("<!DOCTYPE html><html><body><table><tr>\n");
+
+        htmlString.append("<tr><th>Name</th><th>Serial Number</th><th>Value</th></tr>\n");
+
+        for(int i = 0; i < itemList.size(); i++) {
+            htmlString.append("<tr>");
+            htmlString.append("<td>" + itemList.get(i).getNameString() + "</td>");
+            htmlString.append("<td>" + itemList.get(i).getSerialNumberString() + "</td>");
+            htmlString.append("<td>" + itemList.get(i).getValueString() + "</td>");
+            htmlString.append("<tr>\n");
+        }
+
+        htmlString.append("</table></body></html>");
+
+        try {
+            fileWriter = new FileWriter(file,true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.write(htmlString.toString());
+            bufferedWriter.flush();
+            bufferedWriter.close();
+
+        } catch (IOException e) {
+            System.out.println("Add line failed!!" +e);
+        }
 
         Stage stage = (Stage) fileLocationTextBox.getScene().getWindow();
         stage.close();

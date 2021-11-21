@@ -13,15 +13,9 @@ public class ItemArrayList {
 
         List<Item> showing = items;
 
-        // toString for item values
-        for(int i = 0; i < showing.size(); i++) {
-            System.out.println(showing.get(i));
-        }
-
         // adds and displays itemBasic values
         for(int i = 0; i < showing.size(); i++) {
             showing.get(i).setItemBasic();
-            System.out.println(showing.get(i).getItemBasic());
             add(showing.get(i).getItemBasic());
         }
     }

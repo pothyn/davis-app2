@@ -61,11 +61,13 @@ public class ControllerLoad {
         // if txt, parseDataCSV()
         if(file.toPath().toString().endsWith(".txt")) {
             // go line by line through the txt
-            System.out.println("LOG: Load File .txt");
             loadCSV();
         }
         // else if html, parseDataHTML()
+        else if(file.toPath().toString().endsWith(".html")) {
             // use entire file and format it inside parseDataHTML()
+            loadHTML();
+        }
         // else parseDataJSON()
         else
             loadJSON();
@@ -105,12 +107,45 @@ public class ControllerLoad {
         itemList.add(newItem);
     }
 
-    public void loadHTML() {
-        // format for html
+    public void loadHTML() throws FileNotFoundException {
+        Scanner in = new Scanner(file);
+        String nextLine;
 
-        // add table format and add each value
+        in.nextLine();
+        in.nextLine();
+        while(in.hasNext()) {
+            nextLine = in.nextLine();
+            if(nextLine.equals("</table></body></html>"))
+                break;
+            else {
+                addLineHTML(nextLine);
+            }
+        }
+    }
 
-        // close formatting
+    public void addLineHTML(String line) {
+        Item newItem = new Item(itemList);
+        int round = 0;
+        int beginIndex = 0;
+
+        line = line.substring(4);
+
+        // for each value in list, separated by a tab, assign it to name, then serialNumber, then value
+        for(int i=0; i < line.length()-5; i++) {
+            if(line.substring(i,i+5).equals("</td>")) {
+                if(round == 0)
+                    newItem.nameProperty().setValue(line.substring(beginIndex+4,i));
+                else if(round == 1) {
+                    newItem.serialNumberProperty().setValue(line.substring(beginIndex+8,i));
+                }
+                else if(round == 2)
+                    newItem.valueProperty().setValue(line.substring(beginIndex+8,i));
+
+                round++;
+                beginIndex = i+1;
+            }
+        }
+        itemList.add(newItem);
     }
 
     public void loadJSON() throws FileNotFoundException {
@@ -125,7 +160,6 @@ public class ControllerLoad {
             jsonText.append(in.nextLine());
         }
 
-        //
         ItemArrayList itemArrayList = gson.fromJson(jsonText.toString(), ItemArrayList.class);
 
         for(int i = 0; i < itemArrayList.size(); i++) {

@@ -57,8 +57,6 @@ public class Item implements Comparable<Item> {
         itemBasic.setName(getNameString());
         itemBasic.setValue(getValueString());
         itemBasic.setSerialNumber(getSerialNumberString());
-
-        System.out.println(itemBasic.getName()+itemBasic.getSerialNumber()+itemBasic.getValue());
     }
 
     public ItemBasic getItemBasic() {
