@@ -6,14 +6,14 @@ import java.util.List;
 // Class is used only for JSON parsing
 
 public class ItemArrayList {
-    ArrayList<ItemBasic> itemArrayList;
+    ArrayList<ItemBasic> itemBasicArrayList;
 
     public ItemArrayList(List<Item> items) {
-        itemArrayList = new ArrayList<>();
+        itemBasicArrayList = new ArrayList<>();
 
         List<Item> showing = items;
 
-        // adds and displays itemBasic values
+        // sets and adds itemBasic values for each ItemBasic
         for(int i = 0; i < showing.size(); i++) {
             showing.get(i).setItemBasic();
             add(showing.get(i).getItemBasic());
@@ -21,18 +21,14 @@ public class ItemArrayList {
     }
 
     public void add(ItemBasic itemBasic) {
-        itemArrayList.add(itemBasic);
+        itemBasicArrayList.add(itemBasic);
     }
 
     public ItemBasic get(int i) {
-        return itemArrayList.get(i);
-    }
-
-    public List<ItemBasic> get() {
-        return itemArrayList;
+        return itemBasicArrayList.get(i);
     }
 
     public int size() {
-        return itemArrayList.size();
+        return itemBasicArrayList.size();
     }
 }

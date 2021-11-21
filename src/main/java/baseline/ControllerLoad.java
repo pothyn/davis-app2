@@ -2,14 +2,19 @@ package baseline;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.jsoup.Jsoup;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class ControllerLoad {
@@ -47,7 +52,7 @@ public class ControllerLoad {
     }
 
     @FXML
-    public void loadFile() throws FileNotFoundException {
+    public void loadFile() throws IOException {
         getData();
 
         // close stage
@@ -55,7 +60,7 @@ public class ControllerLoad {
         stage.close();
     }
 
-    public void getData() throws FileNotFoundException {
+    public void getData() throws IOException {
         // Determine whether file is JSON, html or txt
 
         // if txt, parseDataCSV()
@@ -107,19 +112,19 @@ public class ControllerLoad {
         itemList.add(newItem);
     }
 
-    public void loadHTML() throws FileNotFoundException {
-        Scanner in = new Scanner(file);
-        String nextLine;
+    public void loadHTML() throws IOException {
+        itemList.remove(0, itemList.size());
+        Document doc = Jsoup.parse(file, "UTF-8");
+        Elements tableRows = doc.select("tr");
+        for (Element tableRow : tableRows) {
+            Elements tableColumns = tableRow.select("td");
+            if (tableColumns.isEmpty())
+                continue;
 
-        in.nextLine();
-        in.nextLine();
-        while(in.hasNext()) {
-            nextLine = in.nextLine();
-            if(nextLine.equals("</table></body></html>"))
-                break;
-            else {
-                addLineHTML(nextLine);
-            }
+            String name = tableColumns.get(0).html();
+            String serialNumber = tableColumns.get(1).html();
+            String value = tableColumns.get(2).html();
+            itemList.add(new Item(name, serialNumber, value, itemList));
         }
     }
 
@@ -130,9 +135,10 @@ public class ControllerLoad {
 
         line = line.substring(4);
 
-        // for each value in list, separated by a tab, assign it to name, then serialNumber, then value
+        // for each value in list separated by a </td>, assign it to name, then serialNumber, then value
+        //     (This is the same process as CSV, but we shave off a few characters to account for HTML Syntax)
         for(int i=0; i < line.length()-5; i++) {
-            if(line.substring(i,i+5).equals("</td>")) {
+            if(line.startsWith("</td>", i)) {
                 if(round == 0)
                     newItem.nameProperty().setValue(line.substring(beginIndex+4,i));
                 else if(round == 1) {
@@ -149,19 +155,21 @@ public class ControllerLoad {
     }
 
     public void loadJSON() throws FileNotFoundException {
-        // run through values for JSON and save them to itemList
         Scanner in = new Scanner(file);
         StringBuilder jsonText = new StringBuilder();
 
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
 
+        // Add everything to one single string
         while(in.hasNext()) {
             jsonText.append(in.nextLine());
         }
 
+        // Use that one single string and plug it into Gson with the ItemArrayList class
         ItemArrayList itemArrayList = gson.fromJson(jsonText.toString(), ItemArrayList.class);
 
+        // We then run through ItemArrayList's ArrayList to get each value.
         for(int i = 0; i < itemArrayList.size(); i++) {
             itemList.add(new Item(itemArrayList.get(i).getName(),itemArrayList.get(i).getSerialNumber(),
                     itemArrayList.get(i).getValue(), itemList));
@@ -169,6 +177,7 @@ public class ControllerLoad {
     }
 
     public void setItemList(ObservableList<Item> itemList) {
+        // Necessary for knowing parent list (i.e. adding items through here)
         this.itemList = itemList;
     }
 }

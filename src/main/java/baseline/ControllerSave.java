@@ -27,13 +27,12 @@ public class ControllerSave {
         // new fileChooser
         FileChooser choose = new FileChooser();
 
-        choose.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON File(*.json)", "*.json"));
         // add .txt file extension
         choose.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text doc(*.txt)", "*.txt"));
         // add .html file extension
         choose.getExtensionFilters().add(new FileChooser.ExtensionFilter("HTML File(*.html)", "*.html"));
         // add .json file extension
-//        choose.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON File(*.json)", "*.json"));
+        choose.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON File(*.json)", "*.json"));
 
         // show save dialog
         File f = choose.showSaveDialog(stage);
@@ -64,10 +63,9 @@ public class ControllerSave {
     }
 
     public void saveCSV() {
-        // for entire itemList
-            // write (in file), name + "\t" + serialNumber + "\t" + value "\n"
-
         clearText();
+
+        // Writes all values to a single string and adds the tabs in together
         for(int i = 0; i < itemList.size(); i++) {
             String line = itemList.get(i).getNameString() + "\t"
                     + itemList.get(i).getSerialNumberString() + "\t"
@@ -86,6 +84,7 @@ public class ControllerSave {
             }
         }
 
+        // Closes file
         Stage stage = (Stage) fileLocationTextBox.getScene().getWindow();
         stage.close();
     }
@@ -117,16 +116,16 @@ public class ControllerSave {
     }
 
     public void saveHTML() {
-        // create html webp
         clearText();
 
         FileWriter fileWriter;
         StringBuilder htmlString = new StringBuilder();
 
+        // Adds necessary HTML syntax
         htmlString.append("<!DOCTYPE html><html><body><table><tr>\n");
-
         htmlString.append("<tr><th>Name</th><th>Serial Number</th><th>Value</th></tr>\n");
 
+        // Adds data to a table
         for(int i = 0; i < itemList.size(); i++) {
             htmlString.append("<tr>");
             htmlString.append("<td>" + itemList.get(i).getNameString() + "</td>");
@@ -135,8 +134,10 @@ public class ControllerSave {
             htmlString.append("<tr>\n");
         }
 
+        // More necessary HTML syntax
         htmlString.append("</table></body></html>");
 
+        // Actually writes to the file
         try {
             fileWriter = new FileWriter(file,true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
@@ -148,6 +149,7 @@ public class ControllerSave {
             System.out.println("Add line failed!!" +e);
         }
 
+        // Closes the file
         Stage stage = (Stage) fileLocationTextBox.getScene().getWindow();
         stage.close();
     }

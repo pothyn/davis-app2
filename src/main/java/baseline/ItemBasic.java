@@ -13,6 +13,10 @@ class ItemBasic {
         value = "";
     }
 
+    // getters and setters with basic types (Strings, ints, doubles, etc.)
+    //     are easy for use with json parsers, and gson in particular does
+    //     not like SimpleStringProperty (used in Item)
+
     public String getName() {
         return name;
     }
