@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="baseline.ItemTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2021-11-21T04:55:09" hostname="LAPTOP-RUVJETMJ" time="0.025">
+  <properties/>
+  <testcase name="testCompareToValue()" classname="baseline.ItemTest" time="0.019"/>
+  <testcase name="testClone()" classname="baseline.ItemTest" time="0.002"/>
+  <testcase name="testCompareToSerialNumber()" classname="baseline.ItemTest" time="0.001"/>
+  <testcase name="testSetItemBasic()" classname="baseline.ItemTest" time="0.001"/>
+  <testcase name="testCompareToName()" classname="baseline.ItemTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

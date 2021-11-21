@@ -28,11 +28,13 @@ public class Item implements Comparable<Item> {
         this.parentList = parentList;
     }
 
+    // Preparation for the compareTo function
     public void setCompareTo(int sortFlag) {
         if(sortFlag >= 0 && sortFlag < 3)
             this.sortFlag = sortFlag;
     }
 
+    // Sorts the ObservableList
     public int compareTo(Item i) {
         if(sortFlag == 0)
             return this.getNameString().compareToIgnoreCase(i.getNameString());
