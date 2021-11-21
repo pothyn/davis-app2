@@ -1,3 +1,8 @@
+/*
+ *  UCF COP3330 Fall 2021 Application Assignment 2 Solution
+ *  Copyright 2021 Hunter Davis
+ */
+
 package baseline;
 
 import javafx.fxml.FXML;
@@ -7,14 +12,8 @@ public class ControllerError {
     @FXML
     private Label errorText;
 
-    private String text;
-
-    @FXML
-    public void initialize() {
-
-    }
-
     public void setErrorMessage(int flag) {
+        // Flag is simple to understand, but it will show a screen depending on what error you fall into.
         if(flag == 0)
             showNameError();
         else if(flag == 1)

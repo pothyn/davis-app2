@@ -1,3 +1,8 @@
+/*
+ *  UCF COP3330 Fall 2021 Application Assignment 2 Solution
+ *  Copyright 2021 Hunter Davis
+ */
+
 package baseline;
 
 import com.google.gson.Gson;
@@ -26,14 +31,9 @@ public class ControllerLoad {
 
     @FXML
     public void filePick() {
-        // create fileChooser
-
-        // add .txt extension
-        // add .html extension
-        // add .json extension
-        // show open file prompt
         Stage stage = (Stage) fileTextBox.getScene().getWindow();
 
+        // create fileChooser
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
 
@@ -44,6 +44,7 @@ public class ControllerLoad {
         // add .json extension
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON File(*.json)", "*.json"));
 
+        // show open file prompt
         File f = fileChooser.showOpenDialog(stage);
         if (f != null) {
             file = f;
@@ -53,14 +54,14 @@ public class ControllerLoad {
 
     @FXML
     public void loadFile() throws IOException {
-        getData();
+        getDataWithFileType();
 
         // close stage
         Stage stage = (Stage) fileTextBox.getScene().getWindow();
         stage.close();
     }
 
-    public void getData() throws IOException {
+    public void getDataWithFileType() throws IOException {
         // Determine whether file is JSON, html or txt
 
         // if txt, parseDataCSV()
@@ -115,43 +116,22 @@ public class ControllerLoad {
     public void loadHTML() throws IOException {
         itemList.remove(0, itemList.size());
         Document doc = Jsoup.parse(file, "UTF-8");
+
+        // Get locations of <tr> in the table, and those will be tableRows
         Elements tableRows = doc.select("tr");
         for (Element tableRow : tableRows) {
+            // Locations of <td> will be tableColumns
             Elements tableColumns = tableRow.select("td");
+            // Don't count headers!
             if (tableColumns.isEmpty())
                 continue;
 
+            // Set the name to the values inside the tags
             String name = tableColumns.get(0).html();
             String serialNumber = tableColumns.get(1).html();
             String value = tableColumns.get(2).html();
             itemList.add(new Item(name, serialNumber, value, itemList));
         }
-    }
-
-    public void addLineHTML(String line) {
-        Item newItem = new Item(itemList);
-        int round = 0;
-        int beginIndex = 0;
-
-        line = line.substring(4);
-
-        // for each value in list separated by a </td>, assign it to name, then serialNumber, then value
-        //     (This is the same process as CSV, but we shave off a few characters to account for HTML Syntax)
-        for(int i=0; i < line.length()-5; i++) {
-            if(line.startsWith("</td>", i)) {
-                if(round == 0)
-                    newItem.nameProperty().setValue(line.substring(beginIndex+4,i));
-                else if(round == 1) {
-                    newItem.serialNumberProperty().setValue(line.substring(beginIndex+8,i));
-                }
-                else if(round == 2)
-                    newItem.valueProperty().setValue(line.substring(beginIndex+8,i));
-
-                round++;
-                beginIndex = i+1;
-            }
-        }
-        itemList.add(newItem);
     }
 
     public void loadJSON() throws FileNotFoundException {

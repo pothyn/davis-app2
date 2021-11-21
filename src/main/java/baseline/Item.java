@@ -1,3 +1,8 @@
+/*
+ *  UCF COP3330 Fall 2021 Application Assignment 2 Solution
+ *  Copyright 2021 Hunter Davis
+ */
+
 package baseline;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -31,7 +36,7 @@ public class Item implements Comparable<Item> {
     // Preparation for the compareTo function
     public void setCompareTo(int sortFlag) {
         if(sortFlag >= 0 && sortFlag < 3)
-            this.sortFlag = sortFlag;
+            Item.sortFlag = sortFlag;
     }
 
     // Sorts the ObservableList
@@ -40,20 +45,32 @@ public class Item implements Comparable<Item> {
             return this.getNameString().compareToIgnoreCase(i.getNameString());
         else if(sortFlag == 1)
             return this.getSerialNumberString().compareToIgnoreCase(i.getSerialNumberString());
-        else
-            return this.getValueString().compareTo(i.getValueString());
+        else {
+            String thisValueString = this.getValueString();
+            String iValueString = i.getValueString();
+
+            thisValueString = thisValueString.substring(1);
+            iValueString = iValueString.substring(1);
+
+            double thisValue = Double.parseDouble(thisValueString);
+            double iValue = Double.parseDouble(iValueString);
+
+            return Double.compare(thisValue, iValue);
+        }
     }
 
     public Item clone() {
         return new Item(name.getValue(), serialNumber.getValue(), value.getValue(), parentList);
     }
 
+    // Bring back a previous state of an item
     public void restore(Item i) {
         name.setValue(i.getNameString());
         serialNumber.setValue(i.getSerialNumberString());
         value.setValue(i.getValueString());
     }
 
+    // Create a simplified version of Item
     public void setItemBasic() {
         itemBasic = new ItemBasic();
         itemBasic.setName(getNameString());
@@ -61,6 +78,7 @@ public class Item implements Comparable<Item> {
         itemBasic.setSerialNumber(getSerialNumberString());
     }
 
+    // Return the ItemBasic for this Item
     public ItemBasic getItemBasic() {
         return itemBasic;
     }

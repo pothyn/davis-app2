@@ -1,3 +1,8 @@
+/*
+ *  UCF COP3330 Fall 2021 Application Assignment 2 Solution
+ *  Copyright 2021 Hunter Davis
+ */
+
 package baseline;
 
 // Class is used only for JSON Parsing

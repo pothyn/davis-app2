@@ -19,6 +19,12 @@ class Item {
     +clone(): Item
     +restore(Item i): void
 
+    +setCompareTo(int sortFlag)
+    +compareTo(Item i)
+
+    +setItemBasic()
+    +getItemBasic()
+
     +getValueString(): String
     +getValueStringProperty(): SimpleStringProperty
     +getSerialNumberString(): String
@@ -30,10 +36,10 @@ class Item {
 class ControllerHomePage {
     -itemList: ObservableList<Item>
     -filteredList: FilteredList<Item>
-    -tableView
-    -tableName
-    -tableSerialNumber
-    -tableValue
+    -tableView: TableView
+    -tableName: TableColumn<Item, String>
+    -tableSerialNumber: TableColumn<Item, String>
+    -tableValue: TableColumn<Item, String>
 
     +handleClear()
     +handleAdd()
@@ -45,7 +51,8 @@ class ControllerHomePage {
     +clearList()
     +initializeList()
     +initialize()
-    +handleSearch()
+    +handleSearchByName()
+    +handleSearchBySerialNumber()
     +handleSortByName()
     +handleSortBySerialNumber()
     +handleSortByValue()
@@ -70,33 +77,75 @@ class ControllerLoad {
 
     +pickFile()
     +loadFile()
-    +parseDataCSV()
-    +parseDataHTML()
-    +parseDataJSON()
+    +getDataWithFileType()
+    +loadCSV()
+    +addLineCSV()
+    +loadHTML()
+    +loadJSON()
+    +setItemList()
 }
 
-class ControllerSaveAs {
+class ControllerSave {
     -itemList: ObservableList<Item>
     -file: File
     -fileTextBox: TextField
 
     +pickFile()
-    +save()
+    +saveFile()
+    +setItemList()
     +saveCSV()
     +saveHTML()
     +saveJSON()
+    +clearText()
 }
+
+class ControllerError {
+    -errorText: Label
+
+    +setErrorMessage(int flag)
+    +showNameError()
+    +showSerialNumberError()
+    +showValueError()
+}
+
+class ItemArrayList {
+    -itemBasicArrayList: ArrayList<ItemBasic>
+
+    +ItemArrayList(List<Item> items)
+    +add(ItemBasic itemBasic)
+    +get(int i) ItemBasic
+    +size()
+}
+
+class ItemBasic {
+    -name: String
+    -serialNumber: String
+    -value: String
+
+    +ItemBasic()
+    +getName(): String
+    +setName(String name)
+    +getSerialNumber(): String
+    +setSerialNumber(String serialNumber)
+    +getValue()
+    +setValue(String value)
+}
+
 
 InventoryManagementApplication -> ControllerHomePage
 
 ControllerHomePage -> ControllerLoad
 ControllerHomePage -> ControllerEdit
-ControllerHomePage -> ControllerSaveAs
+ControllerHomePage -> ControllerSave
+ControllerEdit -> ControllerError
 
 ControllerHomePage -> Item
 ControllerEdit -> Item
-ControllerSaveAs -> Item
+ControllerSave -> Item
 ControllerLoad -> Item
+Item -> ItemArrayList
+Item -> ItemBasic
+ItemArrayList -> ItemBasic
 
 
 @enduml

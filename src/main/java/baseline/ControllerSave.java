@@ -1,3 +1,8 @@
+/*
+ *  UCF COP3330 Fall 2021 Application Assignment 2 Solution
+ *  Copyright 2021 Hunter Davis
+ */
+
 package baseline;
 
 import javafx.collections.ObservableList;
@@ -12,6 +17,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+
+
 
 public class ControllerSave {
     private ObservableList<Item> itemList;
@@ -66,21 +73,21 @@ public class ControllerSave {
         clearText();
 
         // Writes all values to a single string and adds the tabs in together
-        for(int i = 0; i < itemList.size(); i++) {
-            String line = itemList.get(i).getNameString() + "\t"
-                    + itemList.get(i).getSerialNumberString() + "\t"
-                    + itemList.get(i).getValueString() + "\t\n";
+        for (Item item : itemList) {
+            String line = item.getNameString() + "\t"
+                    + item.getSerialNumberString() + "\t"
+                    + item.getValueString() + "\t\n";
 
             FileWriter fileWriter;
             try {
-                fileWriter = new FileWriter(file,true);
+                fileWriter = new FileWriter(file, true);
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
                 bufferedWriter.write(line);
                 bufferedWriter.flush();
                 bufferedWriter.close();
 
             } catch (IOException e) {
-                System.out.println("Add line failed!!" +e);
+                System.out.println("CSV: Add Line Failed! " + e);
             }
         }
 
@@ -92,14 +99,17 @@ public class ControllerSave {
     public void saveJSON() {
         clearText();
 
+        // Create a new ItemArrayList using itemList
         FileWriter fileWriter;
         ItemArrayList itemArrayList = new ItemArrayList(itemList);
 
+        // let gson organize it into a string
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
         Gson gson = builder.create();
         String gsonString = gson.toJson(itemArrayList);
 
+        // put the string into a file
         try {
             fileWriter = new FileWriter(file,true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
@@ -108,9 +118,10 @@ public class ControllerSave {
             bufferedWriter.close();
 
         } catch (IOException e) {
-            System.out.println("Add line failed!!" +e);
+            System.out.println("JSON: Add Line Failed! " +e);
         }
 
+        // close window
         Stage stage = (Stage) fileLocationTextBox.getScene().getWindow();
         stage.close();
     }
@@ -126,11 +137,12 @@ public class ControllerSave {
         htmlString.append("<tr><th>Name</th><th>Serial Number</th><th>Value</th></tr>\n");
 
         // Adds data to a table
-        for(int i = 0; i < itemList.size(); i++) {
+        for (Item item : itemList) {
             htmlString.append("<tr>");
-            htmlString.append("<td>" + itemList.get(i).getNameString() + "</td>");
-            htmlString.append("<td>" + itemList.get(i).getSerialNumberString() + "</td>");
-            htmlString.append("<td>" + itemList.get(i).getValueString() + "</td>");
+            String endTd = "</td>";
+            htmlString.append("<td>").append(item.getNameString()).append(endTd);
+            htmlString.append("<td>").append(item.getSerialNumberString()).append(endTd);
+            htmlString.append("<td>").append(item.getValueString()).append(endTd);
             htmlString.append("<tr>\n");
         }
 

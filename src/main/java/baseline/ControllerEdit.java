@@ -1,3 +1,8 @@
+/*
+ *  UCF COP3330 Fall 2021 Application Assignment 2 Solution
+ *  Copyright 2021 Hunter Davis
+ */
+
 package baseline;
 
 import javafx.collections.ObservableList;
@@ -55,26 +60,30 @@ public class ControllerEdit {
     }
 
     public void displayError(int flag) throws IOException {
+        // IMPORTANT KEY: ( 0 = name, 1 = serialNumber, 2 = value )
+
+        // Opens class
         FXMLLoader loader = new FXMLLoader(InventoryManagementApplication.class.getClassLoader().getResource("baseline/Error.fxml"));
         Parent root = loader.load();
         ControllerError controllerError = loader.getController();
+
         // FLAG: 0 = name, 1 = serialNumber, 2 = value
         controllerError.setErrorMessage(flag);
 
+        // Set up and display the Error screen
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.setTitle("Error");
-
         Scene scene = new Scene(root);
-
         stage.setScene(scene);
         stage.show();
     }
 
     public boolean isSerialNumberValid() {
+        // Store string text in serialNum
         String serialNum = serialNumberField.getText();
         int forStacker = 2;
 
-        // Check the string length
+        // Check the string length is valid
         if(serialNum == null || serialNum.length() != 13)
             return false;
 

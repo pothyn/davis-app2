@@ -1,3 +1,8 @@
+/*
+ *  UCF COP3330 Fall 2021 Application Assignment 2 Solution
+ *  Copyright 2021 Hunter Davis
+ */
+
 package baseline;
 
 import javafx.collections.FXCollections;
@@ -77,15 +82,14 @@ public class ControllerHomePage {
 
     @FXML
     public void handleHelp() throws IOException {
-        // open help fxml file
+        // Open help fxml file
         FXMLLoader loader = new FXMLLoader(InventoryManagementApplication.class.getClassLoader().getResource("baseline/Help.fxml"));
         Parent root = loader.load();
 
+        // Set up scene and display
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.setTitle("Help");
-
         Scene scene = new Scene(root);
-
         stage.setScene(scene);
         stage.show();
     }
@@ -103,6 +107,7 @@ public class ControllerHomePage {
         ControllerEdit editController = loader.getController();
         editController.setItem(newItem);
 
+        // Open AddEdit page, but if closed: call restore() in Item and add it
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.setTitle("Add");
         stage.setOnHidden(event -> {
@@ -134,6 +139,7 @@ public class ControllerHomePage {
         ControllerEdit editController = loader.getController();
         editController.setItem(selectedItem);
 
+        // Open Edit page, but if closed: call restore() in Item and add it
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.setTitle("Edit");
         stage.setOnHidden(event -> {
@@ -192,7 +198,7 @@ public class ControllerHomePage {
         String input = searchBox.getText();
 
         // change filteredList to only display those containing that substring
-        if(input.equals(null)) {
+        if(input == null) {
             filteredList.setPredicate(item -> true);
         } else {
             filteredList.setPredicate(item -> item.getNameString().contains(input));
@@ -205,7 +211,7 @@ public class ControllerHomePage {
         String input = searchBox.getText();
 
         // change filteredList to only display those containing that substring
-        if(input.equals(null)) {
+        if(input == null) {
             filteredList.setPredicate(item -> true);
         } else {
             filteredList.setPredicate(item -> item.getSerialNumberString().contains(input));
